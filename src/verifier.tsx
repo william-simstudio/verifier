@@ -95,11 +95,34 @@ export default function Verifier() {
     <Container fluid className="p-4">
       <Row className="mb-0">
         <Col>
-          <h1>bustabit game verifier</h1>
+          <h1 className="mb-0">bustabit game verifier</h1>
+          <small>
+            <a
+              href="https://github.com/bustabit/verifier"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              source code
+            </a>{' '}
+            |{' '}
+            <a
+              href="https://bitcointalk.org/index.php?topic=5485695.0"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              seeding event
+            </a>
+          </small>
         </Col>
       </Row>
 
-      <Row className="mb-2">
+      <Row className="mt-3 mb-2">
         <Col>
           <p>
             bustabit is provably fair, which means that players themselves can
