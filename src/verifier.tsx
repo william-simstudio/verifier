@@ -12,7 +12,7 @@ import {
 } from 'react-bootstrap';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { COMMITMENT, PREV_CHAIN_LENGTH, PREV_COMMITMENT } from './constants';
+import { COMMITMENT } from './constants';
 import { GameResult, VerificationValues } from './verifier.worker';
 
 export default function Verifier() {
@@ -88,17 +88,16 @@ export default function Verifier() {
   };
 
   const verifyChain = watch('verifyChain');
-  const isCurrentChain = watch('gameNumber') > PREV_CHAIN_LENGTH;
   const isLoading = isLoadingResults || isLoadingFinalHash;
 
   return (
     <Container fluid className="p-4">
       <Row className="mb-0">
         <Col>
-          <h1 className="mb-0">bustabit game verifier</h1>
+          <h1 className="mb-0">xstake game verifier</h1>
           <small>
             <a
-              href="https://github.com/bustabit/verifier"
+              href="https://github.com/xstake/verifier"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -107,7 +106,8 @@ export default function Verifier() {
             >
               source code
             </a>{' '}
-            |{' '}
+            {/* NOTE(joseb): need to undergo seeding event */}
+            {/* |{' '}
             <a
               href="https://bitcointalk.org/index.php?topic=5485695.0"
               target="_blank"
@@ -117,7 +117,7 @@ export default function Verifier() {
               }}
             >
               seeding event
-            </a>
+            </a> */}
           </small>
         </Col>
       </Row>
@@ -125,7 +125,7 @@ export default function Verifier() {
       <Row className="mt-3 mb-2">
         <Col>
           <p>
-            bustabit is provably fair, which means that players themselves can
+            xstake is provably fair, which means that players themselves can
             verify that the game outcomes were decided fairly. Here's how:
           </p>
           <ol>
@@ -134,7 +134,7 @@ export default function Verifier() {
               Copy & paste the hash and game number to the form below.
             </li>
             <li>
-              Verify that the calculated game bust and hash in the table match
+              Verify that the calculated game crash point and hash in the table match
               the information on the game information page.
             </li>
             <li>
@@ -224,8 +224,7 @@ export default function Verifier() {
                   <Form.Text className="text-muted">
                     Which matches commitment:{' '}
                     <span>
-                      {terminatingHash ===
-                      (isCurrentChain ? COMMITMENT : PREV_COMMITMENT)
+                      {terminatingHash === COMMITMENT
                         ? '✅'
                         : '❌'}
                     </span>
@@ -251,8 +250,7 @@ export default function Verifier() {
                 <thead>
                   <tr>
                     <th>Game</th>
-                    <th>Bust</th>
-                    {isCurrentChain && <th>Verified</th>}
+                    <th>Crash</th>
                     <th>Hash</th>
                   </tr>
                 </thead>
@@ -261,7 +259,7 @@ export default function Verifier() {
                     <tr key={result.id}>
                       <td>
                         <a
-                          href={'https://bustabit.com/game/' + result.id}
+                          href={'https://app.xstake.com/game/' + result.id}
                           target="_blank"
                           style={{
                             color: 'inherit',
@@ -272,15 +270,10 @@ export default function Verifier() {
                         </a>
                       </td>
                       <td
-                        style={{ color: result.bust >= 1.98 ? 'green' : 'red' }}
+                        style={{ color: result.crashPoint >= 1.98 ? 'green' : 'red' }}
                       >
-                        {result.bust}x
+                        {result.crashPoint}x
                       </td>
-                      {isCurrentChain && (
-                        <td className="text-center">
-                          {result.verified ? '✅' : '❌'}
-                        </td>
-                      )}
                       <td>{result.hash}</td>
                     </tr>
                   ))}
